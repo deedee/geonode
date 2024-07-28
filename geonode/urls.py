@@ -47,6 +47,8 @@ from oauth2_provider.urls import (
     base_urlpatterns,
     oidc_urlpatterns)
 
+from report.views import home
+
 admin.autodiscover()
 
 js_info_dict = {
@@ -59,12 +61,15 @@ sitemaps = {
     "map": MapSitemap
 }
 
-homepage = register_url_event()(TemplateView.as_view(template_name='index.html'))
+geoportal = register_url_event()(TemplateView.as_view(template_name='index.html'))
 
 urlpatterns = [
     url(r'^$',
-        homepage,
+        home,
         name='home'),
+    url(r'^geoportal/',
+        geoportal,
+        name='geoportal'),
     url(r'^help/$',
         TemplateView.as_view(template_name='help.html'),
         name='help'),

@@ -2256,3 +2256,5 @@ GEOKINCIA = {
         }        
     }
 }
+
+PELAPORAN_DATASET_NAME = 'laporan_masyarakat'

@@ -149,3 +149,9 @@ def truncate_geoserver_cache(ws, name):
     basic = HTTPBasicAuth(settings.OGC_SERVER['default']['USER'], settings.OGC_SERVER['default']['PASSWORD'])
     r = requests.post(url, auth=basic, data=data)
     
+def get_report_stat():
+    baru = db_utils.execute_query('datastore', f'select count(*) from "{settings.PELAPORAN_DATASET_NAME}" where status= \'BARU\'',
+    None, True, False)[0][0]
+    on_progress = db_utils.execute_query('datastore', f'select count(*) from "{settings.PELAPORAN_DATASET_NAME}" where status <> \'BARU\'',
+    None, True, False)[0][0]
+    return baru, on_progress

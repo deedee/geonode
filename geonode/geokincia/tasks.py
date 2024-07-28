@@ -339,3 +339,21 @@ def merge_dataset_task(self, dataset_id, uc_dataset):
                 logger.debug(traceback.format_exc())
     utils.truncate_geoserver_cache(layer.workspace, layer.name)
 
+@app.task(
+    bind=True,
+    name='geokincia.dataset.laporanbaru',
+    queue='cleanup',
+    expires=600,
+    time_limit=600,
+    acks_late=False,
+    autoretry_for=(Exception, ),
+    retry_kwargs={'max_retries': 5},
+    retry_backoff=3,
+    retry_backoff_max=30,
+    retry_jitter=False)
+def tambah_laporan_baru(self, laporan):
+    fields = [f'"{f}"' for f in laporan.keys()]
+    values = [f"'{laporan[f]}'"for f in laporan.keys()]
+    query = f'insert into "{settings.PELAPORAN_DATASET_NAME}"({",".join(fields)}) values({",".join(values)})'
+    db_utils.execute_query('datastore', query, None, False)
+    

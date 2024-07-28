@@ -1,0 +1,441 @@
+{% extends 'template_utama.html' %}
+{% load static %}
+{% load bootstrap_filter %}
+
+{% block content %}
+<body onload="initMap()">
+
+  <main id="main">
+    
+    <section id="contact" class="contact">
+      <div class="container" data-aos="fade-up">
+        <br><br><br>
+        <header class="section-header">
+            <p>Pelaporan</p>
+        </header>
+                
+      <section id="pricing" class="pricing" >
+        <div class="container border rounded p-4" style="background-color: #ffffff;">
+          <header class="section-header">
+            <h2>Apa saja yang bisa dilaporkan?</h2>
+          </header>
+          <div class="horizontal-line col-lg-1" style="border-bottom: 3px solid #a53232; margin: 20px auto;"></div>
+
+          <div class="row gy-4" data-aos="fade-left">
+            <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="100">
+              <div class="box border rounded p-4">
+                <h3 style="color: #0b8074;"> Jalan Lingkungan </h3>
+                  Jalan yang berada di lingkungan perumahan yang dalam kondisi rusak atau belum ditangani (masih tanah)
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="300">
+              <div class="box border rounded p-4">
+                <h3 style="color: #e77e0e;">Drainase Lingkungan</h3>
+                  Drainase yang berada di lingkungan perumahan yang belum ada atau dalam kondisi rusak.
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="400">
+              <div class="box border rounded p-4">
+                <h3 style="color: #0e8d2a;">Rumah Tidak Layak Huni (RTLH)</h3>
+                <!-- Tombol untuk membuka modal -->
+                <div style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#myModal">
+                  Rumah yang memenuhi 
+                  <br> indikator: 
+                  <i class="fas fa-search"></i>
+                </div>
+              </div>
+            </div>
+            <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Rumah Tidak Layak Huni (RTLH)</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <ul>
+                      <li>Tidak permanen/ rusak</li>
+                      <li>Dinding dan atap dibuat dari bahan yang mudah rusak/lapuk, seperti papan, ilalang, bambu yang dianyam/gedeg, dan sebagainya</li>
+                      <li>Dinding dan atap sudah rusak sehingga membahayakan, menganggu keselamatan penghuninya</li>
+                      <li>Lantai tanah/ semen dalam kondisi rusak</li>
+                    </ul>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                  </div>
+                </div>
+              </div>
+            </div>  
+      </section>
+              
+      {% if messages %}
+        {% for message in messages %}
+          {% if 'success' in message.tags %}
+            <div class="alert alert-success" role="alert">
+          {% elif 'error' in message.tags %}
+            <div class="alert alert-error" role="alert">
+          {% endif %}
+              <ul class="list-unstyled">
+                  <li>
+                      {{ message }}
+                  </li>
+              </ul>
+            </div>
+        {% endfor %}
+        {% if form.errors %}
+        <ul class="alert alert-error">
+        {% for error in form.errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+      {% endif %}
+
+      <div class="container mt-5 border rounded p-4 " style="background-color: #ffffff;">
+        <header class="section-header">
+          <h2>Sampaikan Laporan Anda</h2>
+        </header>
+        <div class="horizontal-line col-lg-1" style="border-bottom: 3px solid #a53232; margin: 20px auto;"></div>
+
+        <br>
+        <div class="row gy-4">
+            <div class="col-lg-12">
+              <form method="post" enctype="multipart/form-data" action="{% url 'report:pelaporan' %}" id="form-id">
+                {% csrf_token %}
+                <div class="form-row">
+                  <div class="form-group box border " style="background-color: #c8eec0; padding: 10px;" >
+                    <label for="agreement">
+                      <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                      Harap inputkan data yang sebenarnya. Data yang Anda inputkan akan kami jaga kerahasiaannya sesuai dengan kebijakan privasi kami. Kami berkomitmen melindungi informasi pribadi Anda dan hanya menggunakannya untuk keperluan yang telah disetujui.
+                      <br>
+                    </label>
+                    <i style="font-size: smaller;  color: #bb1b1b;"><b>*</b> : Harus diisi</i>
+                  </div>
+                  <div class="form-group col-md-6">
+                      <label for="id_pelapor"><b>Nama Pelapor </b><b><i style="color: #bb1b1b;">*</i></b></label>
+                      <input type="text" class="form-control" id="id_pelapor" name="pelapor" required autocomplete="off" value="{{ form.pelapor.value|default:'' }}">
+                  </div>
+                  <div class="form-group col-md-6">
+                      <label for="id_nik"><b>NIK</b> <b><i style="color: #bb1b1b;">*</i></b></label>
+                      <div class="error-message" id="nikError"></div>
+                      <input type="text" class="form-control" id="id_nik" name="nik" pattern="\d{16}" required autocomplete="off" value="{{ form.nik.value|default:'' }}">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                      <label for="id_email"><b>Email</b> <i style="font-size: smaller; color: #858282;"> (Optional)</i></b></label>
+                      <div></div>
+                      <div class="error-message" id="emailError"></div>
+                      <input type="email" class="form-control" id="id_email" name="email" autocomplete="off" value="{{ form.email.value|default:''  }}">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="id_nohp"><b>No. Hp</b> <b><i style="color: #bb1b1b;">*</i></b></label>
+                    <div class="error-message" id="nohpError"></div>
+                    <input type="tel" class="form-control" id="id_nohp" name="nohp" pattern="^\+?\d{10,15}$" required autocomplete="off" value="{{ form.nohp.value|default:'' }}">
+                  </div>
+                </div>
+              
+              
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                      <label for="id_jenis_pelaporan"><b>Jenis Pelaporan</b> <b><i style="color: #bb1b1b;">*</i></b></label>
+                      <select id="id_jenis_pelaporan" class="form-control" name="jenis_pelaporan" required onchange="updateKondisiObjekOptions()">
+                          <option value="" disabled selected>Pilih Jenis Pelaporan</option>
+                          <option value="Jalan Lingkungan">Jalan Lingkungan</option>
+                          <option value="Drainase Lingkungan">Drainase Lingkungan</option>
+                          <option value="RTLH">Rumah Tidak Layak Huni (RTLH)</option>
+                          <!-- <option value="etc">etc</option> -->
+                      </select>
+                  </div>
+
+                  <div class="form-group col-md-12" id="rtlhConditions" style="display: none;">
+                    <div class="form-group col-md-12" id="rtlhConditions">
+                      <b><i>Jelaskan kondisi rumah untuk bagian berikut:</i></b><br>
+                      <b><i>1. Kondisi Atap</i></b><br>
+                      <b><i>2. Kondisi Dinding</i></b><br>
+                      <b><i>3. Kondisi Lantai</i></b><br>
+                      <textarea class="form-control" id="id_kondisi_rumah" name="kondisi_rumah" rows="4" cols="40" placeholder="Jelaskan kondisi bagian tersebut"></textarea>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group col-md-6" id="kondisiObjek">
+                      <label for="id_kondisi_objek"> <b>Kondisi Objek</b> <b><i style="color: #bb1b1b;">*</i></b></label>
+                      <select class="form-control" id="id_kondisi_objek" name="kondisi_objek">
+                          <option value="" disabled selected>Pilih Kondisi Objek</option>
+                          <!-- Options akan di-generate secara dinamis melalui JavaScript -->
+                      </select>
+                  </div>
+                </div>
+                
+                <div class="form-row">
+                  <div class="form-group col-md-10">
+                      <label for="location-input"><b>Klik "Lokasi saat ini" untuk menentukan lokasi tempat kejadian</b>  <b><i style="color: #bb1b1b;">*</i></b></label>
+                      <br>
+                      <div class="input-group">
+                        <div class="input-group-append">
+                          <button type="button" id="current-location-button" class="btn btn-primary"><i class="fas fa-map-marker-alt"></i> Lokasi Saat Ini</button>
+                          <button type="button" id="reset-button" class="btn btn-danger"><i class="fas fa-sync-alt"></i> Reset</button>
+                        </div>
+                        <input type="text" id="location-input" class="form-control" name="lokasi" placeholder="Klik 'Lokasi Saat ini' untuk menentukan lokasi" required>
+                      </div>
+                      <input type="hidden" id="lat-input" name="latitude" required>
+                      <input type="hidden" id="lng-input" name="longitude" required>
+                      <div id="map" style="height: 300px; margin-top: 10px;"></div>
+                  </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="id_foto"><b>Foto</b> <i>(maksimal 4)</i>  <b><i style="color: #bb1b1b;">*</i></b></label>
+                    <input type="file" class="form-control" id="id_foto" name="foto" accept="image/*" multiple required>
+                </div>
+                <div id="preview" class="preview-grid" ></div>
+                <br>
+                <div class="form-group box border " style="background-color: #eec7c0; padding: 10px;" >
+                  <label for="agreement">
+                      <input type="checkbox" id="agreement" name="agreement" required>
+                      Dengan ini saya menyatakan bahwa data dan informasi yang saya isi adalah benar dan saya bertanggung jawab penuh atas data dan informasi tersebut, serta bersedia data pribadi tersebut disimpan oleh DPRKP KOTA PADANG untuk digunakan sesuai peruntukannya.
+                  </label>
+                </div>
+
+                {{ captcha_form.captcha_field }} 
+                <br>
+
+                <button type="submit" class="btn-lg btn-primary d-flex justify-content-end" style="margin: 20px auto;">Kirim</button>
+              </form>                     
+            </div>
+        </div>
+      </div>
+
+
+    <script>
+        document.getElementById('form-id').addEventListener('input', function(event) {
+            const target = event.target;
+
+            if (target.id === 'id_nik') {
+                const nikError = document.getElementById('nikError');
+                if (!target.checkValidity()) {
+                    nikError.textContent = '*NIK harus terdiri dari 16 digit angka.';
+                } else {
+                    nikError.textContent = '';
+                }
+            }
+
+            if (target.id === 'id_nohp') {
+                const nohpError = document.getElementById('nohpError');
+                if (!target.checkValidity()) {
+                    nohpError.textContent = '*Masukkan nomor HP yang valid.';
+                } else {
+                    nohpError.textContent = '';
+                }
+            }
+
+            if (target.id === 'id_email') {
+                const emailError = document.getElementById('emailError');
+                if (!target.checkValidity()) {
+                    emailError.textContent = '*Masukkan alamat email yang valid.';
+                } else {
+                    emailError.textContent = '';
+                }
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const messages = document.querySelectorAll('.messages li');
+            messages.forEach(message => {
+                if (message.classList.contains('success')) {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: message.textContent,
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+        });
+
+        function updateKondisiObjekOptions() {
+            var jenisPelaporan = document.getElementById("id_jenis_pelaporan").value;
+            var kondisiObjekSelect = document.getElementById("id_kondisi_objek");
+            var rtlhConditions = document.getElementById("rtlhConditions");
+            var kondisiObjek = document.getElementById("kondisiObjek");
+            var kondisiRumah = document.getElementById("id_kondisi_rumah");
+            // Kosongkan pilihan yang ada
+            kondisiObjekSelect.innerHTML = "";
+           // kondisiRumah.value = '';
+            // Semua field RTLH diatur untuk tampil jika jenis pelaporan adalah RTLH
+            if (jenisPelaporan === "RTLH") {
+                rtlhConditions.style.display = "block"; // Tampilkan div untuk kondisi RTLH
+                kondisiObjek.style.display = "none"; // Sembunyikan div jika bukan RTLH
+            } else {
+                kondisiObjek.style.display = "block"; // Sembunyikan div jika bukan RTLH
+                rtlhConditions.style.display = "none"; // Sembunyikan div jika bukan RTLH
+            }
+
+            // Buat pilihan baru sesuai dengan jenis pelaporan yang dipilih
+            if (jenisPelaporan === "Jalan Lingkungan") {
+                addOption(kondisiObjekSelect, "Tanah/ Belum Ditangani", "Tanah/ Belum Ditangani");
+                addOption(kondisiObjekSelect, "Rusak", "Rusak");
+            } else if (jenisPelaporan === "Drainase Lingkungan") {
+                addOption(kondisiObjekSelect, "Belum Ada Drainase", "Belum Ada Drainase");
+                addOption(kondisiObjekSelect, "Rusak", "Rusak");
+            } else if (jenisPelaporan === "RTLH") {
+                // Jika jenis pelaporan adalah RTLH, tidak ada pilihan untuk kondisi objek, karena sudah ada inputan kondisi atap, dinding, dan lantai.
+                kondisiObjekSelect.style.display = none;
+            } else {
+                // Jika jenis pelaporan bukan yang di atas, tidak ada pilihan yang tersedia
+                addOption(kondisiObjekSelect, "Pilih Jenis Pelaporan terlebih dahulu", "");
+                kondisiObjekSelect.disabled = true;
+            }
+        }
+
+        function addOption(selectElement, text, value) {
+            var option = document.createElement("option");
+            option.textContent = text;
+            option.value = value;
+            selectElement.appendChild(option);
+            selectElement.disabled = false; // Aktifkan select element jika sudah ada pilihan
+        }
+
+        // Panggil fungsi updateKondisiObjekOptions() untuk menginisialisasi opsi pilihan pertama kali
+        updateKondisiObjekOptions();
+
+        document.addEventListener('DOMContentLoaded', function() {
+          var locationInput = document.getElementById('location-input');
+          var latInput = document.getElementById('lat-input');
+          var lngInput = document.getElementById('lng-input');
+          var mapDiv = document.getElementById('map');
+          var currentLocationButton = document.getElementById('current-location-button');
+
+          // Lokasi default untuk Padang
+          var defaultLocation = { lat: -0.947083, lng: 100.417183 };
+
+          // Fungsi untuk menampilkan peta dengan lokasi default
+          function showDefaultMap() {
+              var map = new google.maps.Map(mapDiv, {
+                  center: defaultLocation,
+                  zoom: 12
+              });
+
+              var marker = new google.maps.Marker({
+                  position: defaultLocation,
+                  map: map,
+                  title: 'Padang, Sumatra Barat'
+              });
+          }
+
+          // Event listener untuk klik tombol Lokasi Saat Ini
+          currentLocationButton.addEventListener('click', function() {
+              // Cek apakah Geolocation didukung oleh browser
+              if (navigator.geolocation) {
+                  navigator.geolocation.getCurrentPosition(function(position) {
+                      var latitude = position.coords.latitude;
+                      var longitude = position.coords.longitude;
+
+                      // Set nilai input
+                      latInput.value = latitude;
+                      lngInput.value = longitude;
+
+                      // Ubah nilai pada input lokasi (bisa juga menggunakan Google Maps Geocoding untuk mendapatkan alamat)
+                      var geocoder = new google.maps.Geocoder();
+                      var latlng = new google.maps.LatLng(latitude, longitude);
+
+                      geocoder.geocode({'latLng': latlng}, function(results, status) {
+                          if (status == google.maps.GeocoderStatus.OK) {
+                              if (results[0]) {
+                                  locationInput.value = results[0].formatted_address;
+                              } else {
+                                  locationInput.value = "Alamat tidak ditemukan";
+                              }
+                          } else {
+                              locationInput.value = "Geocoder failed due to: " + status;
+                          }
+                      });
+
+                      // Tampilkan peta dengan lokasi saat ini
+                      var mapOptions = {
+                          center: { lat: latitude, lng: longitude },
+                          zoom: 15
+                      };
+                      var map = new google.maps.Map(mapDiv, mapOptions);
+                      var marker = new google.maps.Marker({
+                          position: { lat: latitude, lng: longitude },
+                          map: map,
+                          title: 'Lokasi Anda'
+                      });
+
+                  }, function() {
+                      // Jika gagal mendapatkan lokasi saat ini, tampilkan peta dengan lokasi default
+                      showDefaultMap();
+                      alert('Gagal mendapatkan lokasi saat ini');
+                  });
+              } else {
+                  // Jika geolocation tidak didukung, tampilkan peta dengan lokasi default
+                  showDefaultMap();
+                  alert('Geolocation tidak didukung oleh browser ini');
+              }
+          });
+
+          // Tampilkan peta dengan lokasi default saat halaman dimuat
+          showDefaultMap();
+
+          // Seleksi tombol reset
+          var resetButton = document.getElementById('reset-button');
+
+          // Event listener untuk tombol reset
+          resetButton.addEventListener('click', function() {
+              // Reset nilai input
+              locationInput.value = "";  
+              latInput.value = "";       
+              lngInput.value = "";       
+
+              // Tampilkan peta dengan lokasi default
+              showDefaultMap();
+          });
+      });
+
+        // Handle form submission
+        const form = document.getElementById("form-id");
+            form.addEventListener("submit", function(event) {
+                const fileInput = document.getElementById("id_foto");
+                if (fileInput.files.length > 4) {
+                    alert("Anda hanya dapat mengunggah maksimal 4 foto.");
+                    event.preventDefault();
+                }
+            });
+
+            document.getElementById('id_foto').addEventListener('change', function(event) {
+              const preview = document.getElementById('preview');
+              preview.innerHTML = ''; // Clear previous previews
+
+              if (this.files.length > 4) {
+                  alert('You can only upload a maximum of 4 files');
+                  this.value = ''; // Clear the input
+                  return;
+              }
+
+              Array.from(this.files).forEach(file => {
+                  if (file.type.startsWith('image/')) {
+                      const reader = new FileReader();
+                      reader.onload = function(e) {
+                          const img = document.createElement('img');
+                          img.src = e.target.result;
+                          img.style.maxWidth = '150px'; // Set image preview size
+                          img.style.margin = '10px';
+                          preview.appendChild(img);
+                      };
+                      reader.readAsDataURL(file);
+                  }
+              });
+          });
+          function initMap() {
+            $('#current-location-button').click();
+          }
+    </script>
+
+    </section>
+  </main>
+
+{% endblock %}
