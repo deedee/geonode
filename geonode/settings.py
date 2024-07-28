@@ -524,7 +524,7 @@ INSTALLED_APPS = (
     'geonode',
 
     'report',
-    'leaflet',
+    #'leaflet',
     'captcha'
 )
 
