@@ -522,6 +522,10 @@ INSTALLED_APPS = (
 
     # GeoNode
     'geonode',
+
+    'report',
+    'leaflet',
+    'captcha'
 )
 
 markdown_white_listed_tags = [
