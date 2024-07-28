@@ -595,8 +595,16 @@ a {
 }
 
 @media (max-width: 768px) {
+  .header .sub-name, .header .name-main {
+    margin-left: -70px;
+  }
+
   .hero {
     text-align: center;
+  }
+
+  .hero .container {
+    margin-top: 60px;
   }
 
   .hero h1 {
