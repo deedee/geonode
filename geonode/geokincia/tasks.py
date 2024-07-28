@@ -356,4 +356,4 @@ def tambah_laporan_baru(self, laporan):
     values = [f"'{laporan[f]}'"for f in laporan.keys()]
     query = f'insert into "{settings.PELAPORAN_DATASET_NAME}"({",".join(fields)}) values({",".join(values)})'
     db_utils.execute_query('datastore', query, None, False)
-    
+    db_utils.update_url_att('datastore', 'fid', settings.PELAPORAN_DATASET_NAME) 
