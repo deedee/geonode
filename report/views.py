@@ -83,6 +83,7 @@ def to_dataset(request, kondisi):
             'jenis_pelaporan' : request.POST.get('jenis_pelaporan').upper(),
             'geom': f"multipoint(({request.POST.get('longitude')} {request.POST.get('latitude')}))",
             'kondisi' : kondisi.upper(),
+            'lokasi' : request.POST.get('lokasi'),
             'status': 'BARU',
             'tgl_laporan': datetime.now().strftime('%d-%m-%Y'),
             'created_at': datetime.now().strftime('%d-%m-%Y'),
