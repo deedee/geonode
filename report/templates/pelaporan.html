@@ -366,10 +366,14 @@
                           title: 'Lokasi Anda'
                       });
 
-                  }, function() {
+                  }, function(e) {
                       // Jika gagal mendapatkan lokasi saat ini, tampilkan peta dengan lokasi default
                       showDefaultMap();
+		      if (e.code===1){
+			alert('Silahkan izinkan situs ini untuk mengakses lokasi untuk keakuratan data, lalu klik lagi tombol "Lokasi Saat ini"');
+				  } else {
                       alert('Gagal mendapatkan lokasi saat ini');
+					      }
                   });
               } else {
                   // Jika geolocation tidak didukung, tampilkan peta dengan lokasi default
@@ -431,6 +435,11 @@
               });
           });
           function initMap() {
+	    if (navigator.userAgent.search(/(android|iphone|ipad)/i) < 1) {
+		$('input').attr('disabled', true);
+		$('button').attr('disabled', true);
+		alert('Penyampaian pelaporan hanya bisa dilakukan di perangkat mobile, dengan lokasi(GPS) aktif');
+	    }
             $('#current-location-button').click();
           }
     </script>

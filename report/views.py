@@ -11,6 +11,7 @@ from PIL import Image, ImageOps
 from PIL.ExifTags import TAGS
 from datetime import datetime
 import uuid
+import re
 
 def home(request):
     dataset = ResourceBase.objects.filter(resource_type='dataset').count()
@@ -23,6 +24,9 @@ def home(request):
 
 def pelaporan(request):
     if request.method == 'POST':
+        if not re.search(r'(android|iphone|ipad)', request.META['HTTP_USER_AGENT'], re.IGNORECASE):
+            messages.error(request, 'Maaf untuk keakuratan data, pelaporan hanya bisa dilakukan melalui perangkat mobile')
+            return redirect('home')
         lapor_form = LaporForm(request.POST, request.FILES)
         captcha_form = CaptchaTestForm(request.POST)
 
