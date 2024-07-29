@@ -21,6 +21,8 @@ import os
 import traceback
 import tempfile
 import zipfile
+import html
+import re
 
 logger = logging.getLogger(__name__)
 
@@ -353,7 +355,8 @@ def merge_dataset_task(self, dataset_id, uc_dataset):
     retry_jitter=False)
 def tambah_laporan_baru(self, laporan):
     fields = [f'"{f}"' for f in laporan.keys()]
-    values = [f"'{laporan[f]}'"for f in laporan.keys()]
+    values = [ html.escape(re.sub(r"'", "''", laporan[f]), quote=False) for f in laporan.keys()]
+    values = [ f"'{v}'" for v in values] 
     query = f'insert into "{settings.PELAPORAN_DATASET_NAME}"({",".join(fields)}) values({",".join(values)})'
     db_utils.execute_query('datastore', query, None, False)
     db_utils.update_url_att('datastore', 'fid', settings.PELAPORAN_DATASET_NAME) 
