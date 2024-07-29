@@ -14,6 +14,29 @@
             <p>Pelaporan</p>
         </header>
                 
+      {% if messages %}
+        {% for message in messages %}
+          {% if 'success' in message.tags %}
+            <div class="alert alert-success" role="alert">
+          {% elif 'error' in message.tags %}
+            <div class="alert alert-error" role="alert">
+          {% endif %}
+              <ul class="list-unstyled">
+                  <li>
+                      {{ message }}
+                  </li>
+              </ul>
+            </div>
+        {% endfor %}
+        {% if form.errors %}
+        <ul class="alert alert-error">
+        {% for error in form.errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+      {% endif %}
+      
       <section id="pricing" class="pricing" >
         <div class="container border rounded p-4" style="background-color: #ffffff;">
           <header class="section-header">
@@ -70,28 +93,6 @@
             </div>  
       </section>
               
-      {% if messages %}
-        {% for message in messages %}
-          {% if 'success' in message.tags %}
-            <div class="alert alert-success" role="alert">
-          {% elif 'error' in message.tags %}
-            <div class="alert alert-error" role="alert">
-          {% endif %}
-              <ul class="list-unstyled">
-                  <li>
-                      {{ message }}
-                  </li>
-              </ul>
-            </div>
-        {% endfor %}
-        {% if form.errors %}
-        <ul class="alert alert-error">
-        {% for error in form.errors %}
-        <li>{{ error }}</li>
-        {% endfor %}
-        </ul>
-        {% endif %}
-      {% endif %}
 
       <div class="container mt-5 border rounded p-4 " style="background-color: #ffffff;">
         <header class="section-header">
@@ -120,7 +121,7 @@
                   <div class="form-group col-md-6">
                       <label for="id_nik"><b>NIK</b> <b><i style="color: #bb1b1b;">*</i></b></label>
                       <div class="error-message" id="nikError"></div>
-                      <input type="text" class="form-control" id="id_nik" name="nik" pattern="\d{16}" required autocomplete="off" value="{{ form.nik.value|default:'' }}">
+                      <input type="tel" class="form-control" id="id_nik" name="nik" pattern="\d{16}" required autocomplete="off" value="{{ form.nik.value|default:'' }}">
                   </div>
                 </div>
                 <div class="form-row">
@@ -365,6 +366,7 @@
                           map: map,
                           title: 'Lokasi Anda'
                       });
+		      window.hasLocation = true;
 
                   }, function(e) {
                       // Jika gagal mendapatkan lokasi saat ini, tampilkan peta dengan lokasi default
@@ -391,6 +393,7 @@
           // Event listener untuk tombol reset
           resetButton.addEventListener('click', function() {
               // Reset nilai input
+		window.hasLocation = false;
               locationInput.value = "";  
               latInput.value = "";       
               lngInput.value = "";       
@@ -406,6 +409,10 @@
                 const fileInput = document.getElementById("id_foto");
                 if (fileInput.files.length > 4) {
                     alert("Anda hanya dapat mengunggah maksimal 4 foto.");
+                    event.preventDefault();
+                }
+		if (!window.hasLocation) {
+                    alert('Silahkan izinkan akses lokasi, lalu klik tombol "Lokasi saat ini"');
                     event.preventDefault();
                 }
             });
@@ -435,6 +442,7 @@
               });
           });
           function initMap() {
+		window.hasLocation = false;
 	    if (navigator.userAgent.search(/(android|iphone|ipad)/i) < 1) {
 		$('input').attr('disabled', true);
 		$('button').attr('disabled', true);
