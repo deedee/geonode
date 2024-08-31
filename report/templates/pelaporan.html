@@ -445,7 +445,7 @@
 		window.hasLocation = false;
 	    if (navigator.userAgent.search(/(android|iphone|ipad)/i) < 1) {
 		$('input').attr('disabled', true);
-		$('button').attr('disabled', true);
+		$('button[type=submit]').attr('disabled', true);
 		alert('Penyampaian pelaporan hanya bisa dilakukan di perangkat mobile, dengan lokasi(GPS) aktif');
 	    }
             $('#current-location-button').click();

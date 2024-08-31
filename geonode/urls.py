@@ -67,6 +67,8 @@ urlpatterns = [
     url(r'^$',
         home,
         name='home'),
+    url(r'^report/',
+        include('report.urls')),
     url(r'^geoportal/',
         geoportal,
         name='geoportal'),
