@@ -44,53 +44,67 @@
           </header>
           <div class="horizontal-line col-lg-1" style="border-bottom: 3px solid #a53232; margin: 20px auto;"></div>
 
-          <div class="row gy-4" data-aos="fade-left">
-            <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="100">
-              <div class="box border rounded p-4">
+          <div class="row gy-4 aos-init aos-animate" style="padding: 10px;" data-aos="fade-left">
+            <div class="col-lg-4 col-md-6 aos-init aos-animate" data-aos="zoom-in" data-aos-delay="100">
+              <div class="box border rounded h-100">
                 <h3 style="color: #0b8074;"> Jalan Lingkungan </h3>
                   Jalan yang berada di lingkungan perumahan yang dalam kondisi rusak atau belum ditangani (masih tanah)
               </div>
             </div>
-
-            <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="300">
-              <div class="box border rounded p-4">
+            <div class="col-lg-4 col-md-6 aos-init aos-animate" data-aos="zoom-in" data-aos-delay="300">
+              <div class="box border rounded h-100">
                 <h3 style="color: #e77e0e;">Drainase Lingkungan</h3>
                   Drainase yang berada di lingkungan perumahan yang belum ada atau dalam kondisi rusak.
               </div>
             </div>
-
-            <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="400">
-              <div class="box border rounded p-4">
-                <h3 style="color: #0e8d2a;">Rumah Tidak Layak Huni (RTLH)</h3>
-                <!-- Tombol untuk membuka modal -->
-                <div style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#myModal">
-                  Rumah yang memenuhi 
-                  <br> indikator: 
-                  <i class="fas fa-search"></i>
+            <div class="col-lg-4 col-md-6 aos-init aos-animate" data-aos="zoom-in" data-aos-delay="400">
+                <div class="box border rounded h-100">
+                  <h3 style="color: #0e8d2a;">Rumah Tidak Layak Huni (RTLH)</h3>
+                  <!-- Tombol untuk membuka modal -->
+                  <div style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#myModal">
+                    Rumah yang memenuhi 
+                    <u style="border-bottom: 1px dotted #0e8d2a;
+                    text-decoration: none;">indikator berikut</u> 
+                  </div>
+                </div>
+            </div>
+            <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Rumah Tidak Layak Huni (RTLH)</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <ul>
+                        <li>Tidak permanen/ rusak</li>
+                        <li>Dinding dan atap dibuat dari bahan yang mudah rusak/lapuk, seperti papan, ilalang, bambu yang dianyam/gedeg, dan sebagainya</li>
+                        <li>Dinding dan atap sudah rusak sehingga membahayakan, menganggu keselamatan penghuninya</li>
+                        <li>Lantai tanah/ semen dalam kondisi rusak</li>
+                      </ul>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Rumah Tidak Layak Huni (RTLH)</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <ul>
-                      <li>Tidak permanen/ rusak</li>
-                      <li>Dinding dan atap dibuat dari bahan yang mudah rusak/lapuk, seperti papan, ilalang, bambu yang dianyam/gedeg, dan sebagainya</li>
-                      <li>Dinding dan atap sudah rusak sehingga membahayakan, menganggu keselamatan penghuninya</li>
-                      <li>Lantai tanah/ semen dalam kondisi rusak</li>
-                    </ul>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                  </div>
+            <div class="row gy-4 aos-init aos-animate" style="padding: 10px;" data-aos="fade-left">
+                <div class="col-lg-6 col-md-6 aos-init aos-animate" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="box border rounded h-100">
+                    <h3 style="color: #e77e0e;">Sanitasi</h3>
+                        Rumah masyarakat berpenghasilan rendah yang belum memiliki septik tank layak dan belum memilik WC.
+                    </div>
                 </div>
-              </div>
-            </div>  
+                <div class="col-lg-6 col-md-6 aos-init aos-animate" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="box border rounded h-100">
+                    <h3 style="color: #0b8074;">Air Minum</h3>
+                        Rumah mayarakat berpenghasilan rendah yang belum ada akses air bersih.
+                    </div>
+                </div>
+            </div>
+        </div>  
       </section>
               
 
@@ -147,6 +161,8 @@
                           <option value="Jalan Lingkungan">Jalan Lingkungan</option>
                           <option value="Drainase Lingkungan">Drainase Lingkungan</option>
                           <option value="RTLH">Rumah Tidak Layak Huni (RTLH)</option>
+                          <option value="Sanitasi">Sanitasi</option>
+                          <option value="Air Minum">Air Minum</option>
                           <!-- <option value="etc">etc</option> -->
                       </select>
                   </div>
@@ -282,6 +298,12 @@
             } else if (jenisPelaporan === "Drainase Lingkungan") {
                 addOption(kondisiObjekSelect, "Belum Ada Drainase", "Belum Ada Drainase");
                 addOption(kondisiObjekSelect, "Rusak", "Rusak");
+            } else if (jenisPelaporan === "Sanitasi") {
+                addOption(kondisiObjekSelect, "Belum Ada WC", "Belum Ada WC");
+                addOption(kondisiObjekSelect, "Belum Ada Septic Tank", "Belum Ada Septic Tank");
+                addOption(kondisiObjekSelect, "Belum Ada WC dan Septic Tank", "Belum Ada WC dan Septic Tank");
+            } else if (jenisPelaporan === "Air Minum") {
+                addOption(kondisiObjekSelect, "Belum Ada", "Belum Ada");
             } else if (jenisPelaporan === "RTLH") {
                 // Jika jenis pelaporan adalah RTLH, tidak ada pilihan untuk kondisi objek, karena sudah ada inputan kondisi atap, dinding, dan lantai.
                 kondisiObjekSelect.style.display = none;

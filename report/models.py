@@ -14,6 +14,8 @@ class Lapor(models.Model):
         ('Jalan Lingkungan', 'Jalan Lingkungan'),
         ('Drainase Lingkungan', 'Drainase Lingkungan'),
         ('RTLH', 'Rumah Tidak Layak Huni (RTLH)'),
+        ('Sanitasi', 'Sanitasi'),
+        ('Air Minum', 'Air Minum'),
         # ('etc', 'etc')
     )
 
